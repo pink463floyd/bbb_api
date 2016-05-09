@@ -18,7 +18,21 @@ from api.serializers import StopsSerializer
 """
 
 
+class Routes(models.Model):
+   route_id = models.CharField(max_length=8)
+   agency_id = models.CharField(max_length=8)
+   route_short_name = models.CharField(max_length=8)
+   route_long_name = models.CharField(max_length=80)
+   route_desc = models.CharField(max_length=8, null=True)
+   route_type = models.CharField(max_length=8, null=True)
+   route_url = models.CharField(max_length=120, null=True)
+   route_color = models.CharField(max_length=8, null=True)
+   route_text_color = models.CharField(max_length=8, null=True)
+   def __unicode__(self):
+      return '%s: %s %s' % (self.route_id, self.route_short_name, self.route_long_name)
 
+
+    
 class Stops(models.Model):
     stop_id = models.CharField(max_length=8)
     stop_code = models.CharField(max_length=16)
