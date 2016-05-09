@@ -13,7 +13,7 @@ serializer.data
 class StopsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stops
-        fields = ('stop_id', 'stop_code', 'stop_desc', 'stop_name', 'latitude')
+        fields = ('stop_code', 'stop_name', 'latitude', 'longitude')
 
 
 
