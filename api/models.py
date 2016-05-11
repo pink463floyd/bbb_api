@@ -38,7 +38,7 @@ class StopTimes(models.Model):
    trip_id = models.CharField(max_length=8)
    arrival_time = models.CharField(max_length=8)
    departure_time = models.CharField(max_length=8)
-   stop_id = models.CharField(max_length=8)
+   stop_id = models.ForeignKey(Stops, db_column='stop_id')
    stop_sequence = models.CharField(max_length=8)
    stop_headsign = models.CharField(max_length=80, null=True)
    pickup_type = models.CharField(max_length=8, null=True)
