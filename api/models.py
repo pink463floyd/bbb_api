@@ -18,7 +18,7 @@ s
 from api.serializers import StopsSerializer
 """
 class Stops(models.Model):
-    stop_id = models.CharField(max_length=8)
+    stop_id = models.IntegerField()
     stop_code = models.CharField(max_length=16)
     stop_name = models.CharField(max_length=80)
     stop_desc = models.CharField(max_length=80)
