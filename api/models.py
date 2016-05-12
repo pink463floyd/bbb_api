@@ -3,7 +3,7 @@ from django.db import models
 
 """
 from api.models import Stops
-from api.models import StopTimes
+from api.serializers import StopsSerializer
 
 s=Stops(stop_id='66666', stop_code='99999', stop_desc='desc desc', stop_name='name name', latitude=1.1, longitude=2.2)
 
@@ -15,7 +15,12 @@ s=Stops.objects.get(stop_id='66666')
 
 s
 
-from api.serializers import StopsSerializer
+from api.models import StopTimes
+
+Below query returns routes serviced by a stop and the next departure time.
+select route_short_name, api_trips.trip_headsign, MIN(departure_time) from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.trip_id inner join api_routes on api_trips.route_id=api_routes.route_id inner join api_stops on api_stoptimes.stop_id = api_stops.stop_id where departure_time > '17:18:00' AND api_trips.service_id = '20160221_10' and api_stops.stop_id ='4' GROUP BY route_short_name, api_trips.trip_headsign;
+
+
 """
 class Stops(models.Model):
     stop_id = models.IntegerField()
