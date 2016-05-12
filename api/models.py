@@ -40,8 +40,8 @@ class Stops(models.Model):
     timezone = models.CharField(max_length=8, null=True)
     wheelchair = models.CharField(max_length=8, null=True)
 
-    def __unicode__(self):
-        return '%s: %s %f %f' % (self.stop_code, self.stop_name, self.latitude, self.longitude)
+    #def __unicode__(self):
+    #   return '%s: %s %f %f' % (self.stop_code, self.stop_name, self.latitude, self.longitude)
 
 class Routes(models.Model):
    route_id = models.CharField(max_length=8)
@@ -53,8 +53,8 @@ class Routes(models.Model):
    route_url = models.CharField(max_length=120, null=True)
    route_color = models.CharField(max_length=8, null=True)
    route_text_color = models.CharField(max_length=8, null=True)
-   def __unicode__(self):
-      return '%s: %s %s' % (self.route_id, self.route_short_name, self.route_long_name)
+   #def __unicode__(self):
+   #   return '%s: %s %s' % (self.route_id, self.route_short_name, self.route_long_name)
 
 class Trips(models.Model):
    route_id=models.CharField(max_length=8)
@@ -80,6 +80,6 @@ class StopTimes(models.Model):
    drop_off_type = models.CharField(max_length=8, null=True)
    shape_dist_traveled = models.CharField(max_length=8, null=True)
    timepoint = models.CharField(max_length=8, null=True)
-   def __unicode__(self):
-      return '%s: %s %s' % (self.trip_id, self.stop_id, self.stop_sequence)
+   ##def __unicode__(self):
+   #   return '%s: %s %s' % (self.trip_id, self.stop_id, self.stop_sequence)
 
