@@ -39,21 +39,6 @@ class Stops(models.Model):
     def __unicode__(self):
         return '%s: %s %f %f' % (self.stop_code, self.stop_name, self.latitude, self.longitude)
 
-class StopTimes(models.Model):
-   trip_id = models.CharField(max_length=8)
-   arrival_time = models.CharField(max_length=8)
-   departure_time = models.CharField(max_length=8)
-   stop_id = models.ForeignKey(Stops, db_column='stop_id')
-   stop_sequence = models.CharField(max_length=8)
-   stop_headsign = models.CharField(max_length=80, null=True)
-   pickup_type = models.CharField(max_length=8, null=True)
-   drop_off_type = models.CharField(max_length=8, null=True)
-   shape_dist_traveled = models.CharField(max_length=8, null=True)
-   timepoint = models.CharField(max_length=8, null=True)
-   def __unicode__(self):
-      return '%s: %s %s' % (self.trip_id, self.stop_id, self.stop_sequence)
-
-
 class Routes(models.Model):
    route_id = models.CharField(max_length=8)
    agency_id = models.CharField(max_length=8)
@@ -78,3 +63,18 @@ class Trips(models.Model):
    shape_id=models.CharField(max_length=8)
    wheelchair_accessible=models.CharField(max_length=8)
    bikes_allowed=models.CharField(max_length=8)
+
+class StopTimes(models.Model):
+   trip_id = models.ForeignKey(Trips, db_column='trip_id')
+   arrival_time = models.CharField(max_length=8)
+   departure_time = models.CharField(max_length=8)
+   stop_id = models.ForeignKey(Stops, db_column='stop_id')
+   stop_sequence = models.CharField(max_length=8)
+   stop_headsign = models.CharField(max_length=80, null=True)
+   pickup_type = models.CharField(max_length=8, null=True)
+   drop_off_type = models.CharField(max_length=8, null=True)
+   shape_dist_traveled = models.CharField(max_length=8, null=True)
+   timepoint = models.CharField(max_length=8, null=True)
+   def __unicode__(self):
+      return '%s: %s %s' % (self.trip_id, self.stop_id, self.stop_sequence)
+
