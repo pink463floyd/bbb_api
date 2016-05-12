@@ -21,6 +21,9 @@ Below query returns routes serviced by a stop and the next departure time.
 select route_short_name, api_trips.trip_headsign, MIN(departure_time) from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.trip_id inner join api_routes on api_trips.route_id=api_routes.route_id inner join api_stops on api_stoptimes.stop_id = api_stops.stop_id where departure_time > '17:18:00' AND api_trips.service_id = '20160221_10' and api_stops.stop_id ='4' GROUP BY route_short_name, api_trips.trip_headsign;
 
 
+Below is 'training wheel' query:
+select route_short_name, api_routes.route_id, departure_time, trip_headsign from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.id inner join api_routes on api_routes.id = api_trips.route_id where api_stoptimes.stop_id='4' and api_stoptimes.departure_time > '17:18:00';
+ 
 """
 class Stops(models.Model):
     stop_id = models.IntegerField()
@@ -54,6 +57,7 @@ class Routes(models.Model):
 
 class Trips(models.Model):
    route_id=models.CharField(max_length=8)
+   route_id= models.ForeignKey(Routes, db_column='route_id')
    service_id=models.CharField(max_length=24)
    trip_id=models.CharField(max_length=8)
    trip_headsign=models.CharField(max_length=80)
