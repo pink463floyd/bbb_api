@@ -63,7 +63,8 @@ class Routes(models.Model):
 
 class Trips(models.Model):
    route_id=models.CharField(max_length=8)
-   route_id= models.ForeignKey(Routes, db_column='route_id', related_name='my_trip_id')
+   #route_id= models.ForeignKey(Routes, db_column='route_id', related_name='my_trip_id')
+   route_id= models.ForeignKey(Routes, db_column='route_id')
    service_id=models.CharField(max_length=24)
    trip_id=models.CharField(max_length=8)
    trip_headsign=models.CharField(max_length=80)
@@ -75,10 +76,12 @@ class Trips(models.Model):
    bikes_allowed=models.CharField(max_length=8)
 
 class StopTimes(models.Model):
-   trip_id = models.ForeignKey(Trips, db_column='trip_id', related_name='my_stop_times_trip_id')
+   #trip_id = models.ForeignKey(Trips, db_column='trip_id', related_name='my_stop_times_trip_id')
+   trip_id = models.ForeignKey(Trips, db_column='trip_id')
    arrival_time = models.CharField(max_length=8)
    departure_time = models.CharField(max_length=8)
-   stop_id = models.ForeignKey(Stops, db_column='stop_id', related_name='my_stop_times_stop_id')
+   #stop_id = models.ForeignKey(Stops, db_column='stop_id', related_name='my_stop_times_stop_id')
+   stop_id = models.ForeignKey(Stops, db_column='stop_id')
    stop_sequence = models.CharField(max_length=8)
    stop_headsign = models.CharField(max_length=80, null=True)
    pickup_type = models.CharField(max_length=8, null=True)
