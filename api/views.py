@@ -4,6 +4,9 @@ from api.models import Stops
 from api.serializers import StopsSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+from api.serializers import FooSerializer
+from api.models import Routes
+
 
 
 
@@ -17,6 +20,17 @@ def stops_list(request):
         stops = Stops.objects.all()
         serializer = StopsSerializer(stops, many=True)
         return JSONResponse(serializer.data)
+
+#@csrf_exempt
+def departures_detail(request, pk):
+    print("departure detail" + pk);
+    time="'17:18:00'"
+    stop = "'4'"
+
+    departures=Routes.objects.raw("select api_routes.id, route_short_name, api_trips.trip_headsign, MIN(departure_time) from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.id inner join api_routes on api_trips.route_id=api_routes.id inner join api_stops on api_stoptimes.stop_id = api_stops.id where departure_time > " + time + " AND api_trips.service_id = '20160221_10' and api_stops.stop_id = " + stop + " GROUP BY api_routes.id, route_short_name, api_trips.trip_headsign;")
+
+    serializer=FooSerializer(departures,many=True)
+    return JSONResponse(serializer.data)
 
 #@csrf_exempt
 def stops_detail(request, pk):
