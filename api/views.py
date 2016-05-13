@@ -22,8 +22,8 @@ def stops_list(request):
         return JSONResponse(serializer.data)
 
 #@csrf_exempt
-def departures_detail(request, pk):
-    print("departure detail" + pk);
+def departures_detail(request, pk, fk):
+    print("departure detail" + " " + pk + " " + fk);
     time="'17:18:00'"
     stop = "'"+pk+"'"
 
