@@ -26,6 +26,11 @@ Below is 'training wheel' query:
 select route_short_name, api_routes.route_id, departure_time, trip_headsign from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.id inner join api_routes on api_routes.id = api_trips.route_id where api_stoptimes.stop_id='4' and api_stoptimes.departure_time > '17:18:00';
  
 """
+class Foo(models.Model):
+   route_short_name = models.CharField(max_length=8)
+   trip_headsign=models.CharField(max_length=80)
+   min = models.CharField(max_length=8)
+
 class Stops(models.Model):
     stop_id = models.IntegerField()
     stop_code = models.CharField(max_length=16)

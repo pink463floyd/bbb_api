@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Stops, Trips, Routes, StopTimes
+from api.models import Stops, Trips, Routes, StopTimes, Foo
 
 
 """
@@ -9,6 +9,11 @@ s=Stops.objects.get(stop_id='66666')
 serializer=StopsSerializer(s)
 serializer.data
 """
+
+class FooSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Foo
+        fields = ('route_short_name', 'trip_headsign', 'min')
 
 class StopsSerializer(serializers.ModelSerializer):
     class Meta:
