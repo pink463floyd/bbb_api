@@ -1,6 +1,6 @@
 import sys
 sys.path.append('/home/slarribeau/src/python/django_bbb/vp27/lib/python2.7/site-packages/google/transit')
-print sys.path
+#print sys.path
 
 from datetime import datetime as dt
 from time import sleep
@@ -11,13 +11,34 @@ r = requests.get('http://gtfs.bigbluebus.com/tripupdates.bin')
 f = gtfs.FeedMessage()
 f.ParseFromString(r.content)
 for e in f.entity:
-        print "Id: " + str(e.vehicle.vehicle.id)
-        print "Latitude: " + str(e.vehicle.position.latitude)
-        print "Longitude: " + str(e.vehicle.position.longitude)
-	etime = dt.fromtimestamp(e.vehicle.timestamp)
-	etime = etime.strftime('%H:%M:%S')
-	curr_time = dt.now()
-	curr_time = curr_time.strftime('%H:%M:%S')
-	print "Time: " + etime
-	print "Script-Time: " + curr_time
+  #print e
+  #print e.trip_update
+  #print e.trip_update.trip.trip_id
+  #print e.trip_update.stop_time_update[0].stop_sequence
+  #print e.trip_update.stop_time_update[0].arrival.delay
+  print str(e.trip_update.trip.trip_id) + ': ' + str(e.trip_update.stop_time_update[0].arrival.delay)
 
+"""
+658094
+[<gtfs_realtime_pb2.StopTimeUpdate object at 0x25be8c0>]
+"""
+
+
+"""
+id: "3876"
+trip_update {
+  trip {
+    trip_id: "658070"
+  }
+  stop_time_update {
+    stop_sequence: 1
+    arrival {
+      delay: 0
+    }
+  }
+  vehicle {
+    id: "3876"
+  }
+  timestamp: 1463942630
+}
+"""
