@@ -6,6 +6,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from api.serializers import FooSerializer
 from api.models import Routes
+from api.models import StopTimes
 
 
 
@@ -28,7 +29,10 @@ def departures_detail(request, pk, fk):
     time="'"+fk+"'"
     stop = "'"+pk+"'"
 
-    departures=Routes.objects.raw("select api_routes.id, route_short_name, api_trips.trip_headsign, MIN(departure_time) from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.id inner join api_routes on api_trips.route_id=api_routes.id inner join api_stops on api_stoptimes.stop_id = api_stops.id where departure_time > " + time + " AND api_trips.service_id = '20160221_10' and api_stops.stop_code = " + stop + " GROUP BY api_routes.id, route_short_name, api_trips.trip_headsign;")
+    departures=Routes.objects.raw("select DISTINCT ON (route_short_name) api_routes.id, route_short_name, api_trips.trip_headsign, departure_time from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.id inner join api_routes on api_trips.route_id=api_routes.id inner join api_stops on api_stoptimes.stop_id = api_stops.id where departure_time > " + time + " AND api_trips.service_id = '20160221_10' and api_stops.stop_code = " + stop + " ORDER BY route_short_name ASC, departure_time ASC;")
+
+
+    #departures = StopTimes.objects.filter(stop_id='4').filter(departure_time__gte='17:18:00').filter(trip_id__service_id='20160221_10').order_by('trip_id__route_id__route_short_name', 'departure_time').distinct('trip_id__route_id__route_short_name').values('trip_id__trip_headsign', 'trip_id__route_id__route_short_name', 'departure_time', 'trip_id__route_id');
 
     serializer=FooSerializer(departures,many=True)
     return JSONResponse(serializer.data)
