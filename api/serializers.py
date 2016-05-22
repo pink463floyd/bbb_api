@@ -13,7 +13,7 @@ serializer.data
 class FooSerializer(serializers.ModelSerializer):
     class Meta:
         model = Foo
-        fields = ('route_short_name', 'trip_headsign', 'min')
+        fields = ('route_short_name', 'trip_headsign', 'departure_time')
 
 class StopsSerializer(serializers.ModelSerializer):
     class Meta:

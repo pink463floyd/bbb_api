@@ -29,7 +29,7 @@ select route_short_name, api_routes.route_id, departure_time, trip_headsign from
 class Foo(models.Model):
    route_short_name = models.CharField(max_length=8)
    trip_headsign=models.CharField(max_length=80)
-   min = models.CharField(max_length=8)
+   departure_time = models.CharField(max_length=8)
 
 class Stops(models.Model):
     stop_id = models.IntegerField()
