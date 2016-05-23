@@ -74,6 +74,7 @@ class Trips(models.Model):
    shape_id=models.CharField(max_length=8)
    wheelchair_accessible=models.CharField(max_length=8)
    bikes_allowed=models.CharField(max_length=8)
+   delay=models.SmallIntegerField(null=True);
 
 class StopTimes(models.Model):
    #trip_id = models.ForeignKey(Trips, db_column='trip_id', related_name='my_stop_times_trip_id')
