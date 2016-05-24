@@ -18,7 +18,7 @@ conn = psycopg2.connect("dbname='django' user='djangouser' host='127.0.0.1' pass
 
 
 cur = conn.cursor()
-update="UPDATE api_trips SET delay = 3;"
+update="UPDATE api_trips SET delay = 32767;"
 cur.execute(update)
 conn.commit();
 
