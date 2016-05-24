@@ -17,6 +17,10 @@ s
 
 from api.models import StopTimes
 
+Below query is best to date, it uses sorting instead of group by which allows the extraction of delay from trips table: (Note this query uses stop_code instead of stop_id)
+
+select DISTINCT ON (route_short_name) route_short_name, api_trips.trip_headsign, api_trips.trip_id, departure_time, api_trips.delay from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.id inner join api_routes on api_trips.route_id=api_routes.id inner join api_stops on api_stoptimes.stop_id = api_stops.id where departure_time > '10:18:00' AND api_trips.service_id = '20160221_10' and api_stops.stop_code ='1020' order by route_short_name ASC, departure_time ASC;
+
 Below query returns routes serviced by a stop and the next departure time.
 select route_short_name, api_trips.trip_headsign, MIN(departure_time) from api_stoptimes inner join api_trips on api_stoptimes.trip_id = api_trips.id inner join api_routes on api_trips.route_id=api_routes.id inner join api_stops on api_stoptimes.stop_id = api_stops.id where departure_time > '17:18:00' AND api_trips.service_id = '20160221_10' and api_stops.stop_id ='4' GROUP BY route_short_name, api_trips.trip_headsign;
 
@@ -30,6 +34,7 @@ class Foo(models.Model):
    route_short_name = models.CharField(max_length=8)
    trip_headsign=models.CharField(max_length=80)
    departure_time = models.CharField(max_length=8)
+   delay=models.SmallIntegerField(null=True);
 
 class Stops(models.Model):
     stop_id = models.IntegerField()
